@@ -1,0 +1,3 @@
+Dette er første linje af en test tekstfil
+Dette er anden linje af en test tekstfil
+Dette er tredje linje af en test tekstfil
