@@ -8,20 +8,30 @@
 <body>
 
     <p id="hej"></p>
+    <button id="slet">Slet navnet</button>
 
     <script>
-
+            let p = document.getElementById("hej");
+            let btn = document.getElementById("slet");
             let navn = sessionStorage.getItem("brugernavn");
 
             if(navn){
-                document.getElementById("hej").textContent = `Hej ${navn}`;
+                p.textContent = `Hej ${navn}`;
+                btn.style.display = "block";
             } else {
                 navn = prompt("Hvad er dit navn?");
+                btn.style.display = "none";
                 // Tjekker om der er indtastet et gyldigt navn, ellers returnerer den navnet som null
                 if (navn && navn.trim() !== "") {
                     sessionStorage.setItem("brugernavn", navn);
                     }
             }  
+
+            btn.addEventListener("click", () => {
+                sessionStorage.removeItem("brugernavn");
+                p.textContent = "";
+                btn.style.display = "none";
+            })
 
     </script>
     
