@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // Beder brugeren om at indtaste to tal
+let m = Number(prompt("Indtast starttallet (m):"));
+let n = Number(prompt("Indtast sluttallet (n):"));
+let sum = 0;
+
+// Løkke der lægger alle tal fra m til n sammen
+for (let i = m; i <= n; ++i) {
+    if (i % 7 === 0) {
+        continue; // Spring tal der er delelige med 7 over
+    }
+  console.log(i); sum += i;
+};
+
+// Udskriver resultatet i konsollen
+console.log(`Summen af tallene fra ${m} til ${n} er: ${sum}`);
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="form-wrapper">
+        <form action="">
+            <input type="text" id="name" placeholder="Navn">
+            <input type="text" id="job" placeholder="Job">
+            <button type="submit">Send</button>
+        </form>
+    </div>
+
+    <script>
+        const form = document.querySelector("form");
+        form.addEventListener("submit", function (e) {
+            e.preventDefault();
+
+            const name = document.getElementById("name").value;
+            const job = document.getElementById("job").value;
+
+            fetch('https://reqres.in/api/users', {
+                headers: {'x-api-key': 'reqres-free-v1'}})
+            })
+            let data = {
+                "name": name,
+                "job": job
+            }
+            const json = JSON.stringify(data);
+            function færdig(e) {
+                console.log(xhr.responseText);
+                console.log(e);
+            };
+
+    </script>
+</body>
+</html>

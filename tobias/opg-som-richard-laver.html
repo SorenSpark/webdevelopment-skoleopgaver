@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <button id="knap">Klik her</button>
+    <script>
+        let n = Number(prompt("Indtast et tal:"));
+        let en=0, to=0, tre=0, fire=0, fem=0, seks=0;
+        for (let i = 0; i < n; i++) {
+            let x = Math.floor(Math.random() * 6) + 1;
+            switch(x) {
+                case 1:
+                    en++;
+                    break;
+                case 2:
+                    to++;
+                    break;
+                case 3:
+                    tre++;
+                    break;
+                case 4:
+                    fire++;
+                    break;
+                case 5:
+                    fem++;
+                    break;
+                case 6:
+                    seks++;}};
+                    console.log(en);
+                    console.log(to);
+                    console.log(tre);
+                    console.log(fire);
+                    console.log(fem);
+                    console.log(seks);
+    </script>
+</body>
+</html>

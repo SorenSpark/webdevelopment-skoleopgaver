@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+
+    <script>
+// Beder brugeren om at indtaste et tal (arrayets størrelse)
+let size = prompt("write a number:");
+
+// Opretter et tomt array
+let array = [];
+
+// Fylder arrayet med tilfældige tal mellem 0 og 1
+for (let i = 0; i < size; ++i) {
+    array[i] = Math.random();
+}
+
+// Deklarerer en variabel til summen
+let sum = 0;
+
+// Løber igennem hele arrayet og lægger alle værdier sammen
+for (const element of array) {
+    sum += element;
+}
+
+// Beregner gennemsnittet af tallene i arrayet
+let average = sum / array.length;
+
+// Udskriver resultaterne i konsollen
+console.log("Array:", array);    // viser alle de tilfældige tal
+console.log("sum:", sum);        // viser summen af alle tallene
+console.log("Average:", average); // viser gennemsnittet
+    </script>
+</body>
+</html>

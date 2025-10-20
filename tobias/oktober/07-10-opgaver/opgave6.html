@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta navn="viewport" content="width=device-width, initial-scale=1">
+  <title>Opgave 6</title>
+</head>
+
+<body>
+  <p id="outputP"></p>
+
+  <script type="text/javascript">
+    function findCookie(navn) {
+      const start = document.cookie.indexOf(navn + "=");
+      if (start < 0) return "";
+      let slut = document.cookie.indexOf(";", start);
+      if (slut < 0) slut = document.cookie.length;
+      return document.cookie.slice(start + navn.length + 1, slut);
+    }
+    const hobby = prompt('Angiv hobby');
+    document.cookie = `hobby=${hobby}; path=/`;
+    //virker ikke umiddelbart i Chrome fordi Chrome ikke gemmer en cookie med det samme, men med en vis forsinkelse
+    document.getElementById('outputP').innerHTML = findCookie('hobby');
+
+  </script>
+
+</body>
+
+</html>

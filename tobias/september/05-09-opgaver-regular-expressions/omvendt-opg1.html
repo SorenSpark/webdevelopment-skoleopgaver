@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <p id="demo"></p>
+    <p id="demo1"></p>
+
+    <script>
+        /* Med denne metode, laves der to nye arrays, hvilket ikke er optimalt, selvom det virker nemmere for brugeren at lave.  */
+
+/*         let text = "allo allo";
+        function reverseString(str) {
+            return str.split().reverse().join("");
+        }
+
+        document.getElementById("demo").textContent = omvendtstreng(text); */
+
+        function omvendtstreng(str) {
+            let result = "";
+            for (let pos = str.length - 1; pos >= 0; --pos) {
+                result += str[pos];
+            }
+            return result;
+            }
+            document.getElementById("demo").textContent = omvendtstreng(text);
+
+        function omvendtstreng2(str) {
+            let temp = "";
+            for (let i = str.length - 1; i >= 0; i--) {
+            temp += str[i];
+            }
+            return temp === str;
+            }
+            document.getElementById("demo1").textContent = omvendtstreng2(text);
+
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,14 @@
+    /* Standard lys tilstand */
+    body {
+      background-color: white;
+      color: black;
+    }
+
+    /* Dark mode klasse */
+   .dark-mode {
+      background-color: #1c1c1c;
+      color: #e0e0e0;
+    }
+
+    button#darkBtn { background-color: #333; color: white; }
+    button#lightBtn { background-color: #ddd; color: black; }

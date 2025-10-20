@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        let s = prompt("skriv et ord:");
+        function omvendt(str) {
+            let temp = "";
+            for (let pos = 0; pos < str.length; ++pos) {
+                temp = str[pos] + temp;
+            };
+            return temp;
+        }
+        function palindrom(str) {
+            return str === omvendt(str);
+        };
+        console.log(palindrom(s));
+    </script>
+
+</body>
+</html>

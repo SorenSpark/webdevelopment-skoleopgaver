@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+/*         let s = prompt("skriv en sætning:");
+        function tælvokaler(string) {
+            const antal = string.match(/[aeiouyæøå]/gi);
+            return antal.length;
+        }
+        console.log(tælvokaler(s)); */
+
+
+        let s = prompt("skriv en sætning:");
+
+        function tælvokaler(string) {
+        const vowels = "aeiouyæøå"; // de vokaler vi leder efter
+        let count = 0;
+
+  // loop gennem hvert tegn i strengen
+        for (const char of string) {
+        const lowerChar = char.toLowerCase(); // gør bogstavet lowercase
+        if (vowels.includes(lowerChar)) {
+        count++;
+                }
+            }
+
+        return count;
+        }
+
+console.log(tælvokaler(s));
+
+        
+
+    </script>
+</body>
+</html>

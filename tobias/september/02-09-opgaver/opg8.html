@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/style/style.css">
+    <title>Document</title>
+</head>
+<body>
+    <button id="darkBtn">Dark Mode</button>
+    <button id="lightBtn">Light Mode</button>
+
+    <script>
+    // Finder knapperne i DOM'en
+    const darkBtn = document.getElementById("darkBtn");
+    const lightBtn = document.getElementById("lightBtn");
+
+    // Dark Mode knap
+    darkBtn.addEventListener("click", () => {
+      document.body.classList.add("dark-mode"); // Tilføjer dark-mode klassen
+    });
+
+    // Light Mode knap
+    lightBtn.addEventListener("click", () => {
+      document.body.classList.remove("dark-mode"); // Fjerner dark-mode klassen
+    });
+    </script>
+    
+</body>
+</html>

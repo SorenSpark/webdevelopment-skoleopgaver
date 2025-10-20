@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <button id="knap">Klik på mig</button>
+    <div id="resultat">Du har klikket 0 gange</div>
+
+<script>
+    let klikTæller = 0;
+
+    // Finder elementerne i DOM'en
+    const knap = document.getElementById("knap");
+    const resultat = document.getElementById("resultat");
+
+    // Tilføjer en hændelseslytter til knappen
+    knap.addEventListener("click", function klik() {
+        // Øger tælleren med 1 hver gang knappen trykkes
+        klikTæller++;
+
+        // Opdaterer teksten i resultat-div'en
+        if (klikTæller === 1) {
+            resultat.textContent = `Du har klikket ${klikTæller} gang`;
+        } else {
+            resultat.textContent = `Du har klikket ${klikTæller} gange`;
+        }
+    });
+    </script>
+</body>
+</html>

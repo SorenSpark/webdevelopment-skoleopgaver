@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <button id="roll">Kast terningen</button>
+    <script>
+document.getElementById("roll").addEventListener("click", function() {
+    // Bed brugeren om input
+    let n = parseInt(prompt("Hvor mange gange skal terningen kastes?"));
+    
+    // Tæl hvor mange gange hver side lander
+    let terningTal = [0, 0, 0, 0, 0, 0]; // index 0 = side 1, index 5 = side 6
+
+    for (let i = 0; i < n; i++) {
+        let x = Math.floor(Math.random() * 6) + 1;
+
+        switch(x) {
+            case 1:
+                terningTal[0]++;
+                break;
+            case 2:
+                terningTal[1]++;
+                break;
+            case 3:
+                terningTal[2]++;
+                break;
+            case 4:
+                terningTal[3]++;
+                break;
+            case 5:
+                terningTal[4]++;
+                break;
+            case 6:
+                terningTal[5]++;
+                break;
+        }
+    }
+
+    // Udskriv resultaterne
+    for (let i = 0; i < 6; i++) {
+        console.log(`Side ${i+1} kom op ${terningTal[i]} gange`);
+    }
+});
+    </script>
+</body>
+</html>

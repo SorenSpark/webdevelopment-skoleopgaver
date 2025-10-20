@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+       <script>
+        // Some()
+        let num = [1, 3, 7, 10, 16];
+        // Tjekker om mindst et tal er større end 9
+        let bigNum = num.some(n => n > 9);
+        console.log(bigNum);
+ 
+ 
+        // Every()
+        let age = [11, 13, 17, 10, 16];
+        // Tjekker alle aldere er større end 18
+        let ageCheck = age.every(n => n > 18);
+        console.log(ageCheck);
+ 
+        // ReduceRight() som string
+        let word = ["javascript", "er", "sejt"];
+        // Reducere de 3 værdier fra word, til en samlet string, med start fra højre side
+        let sent = word.reduceRight((acc, word) => acc + " " + word);
+        console.log(sent);
+ 
+        // ReduceRight() som tal
+        let numRed = [1, 2, 5, 7];
+        // Reducere de 4 værdier fra numRed, til en samlet værdi, med start fra højre side
+        let sum = numRed.reduceRight((acc, n) => acc + n, 0);
+        console.log(sum);
+    </script>
+</body>
+</html>
