@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <p id="hej"></p>
+
+    <script>
+
+            let navn = sessionStorage.getItem("brugernavn");
+
+            if(navn){
+                document.getElementById("hej").textContent = `Hej ${navn}`;
+            } else {
+                navn = prompt("Hvad er dit navn?");
+                // Tjekker om der er indtastet et gyldigt navn, ellers returnerer den navnet som null
+                if (navn && navn.trim() !== "") {
+                    sessionStorage.setItem("brugernavn", navn);
+                    }
+            }  
+
+    </script>
+    
+</body>
+</html>
