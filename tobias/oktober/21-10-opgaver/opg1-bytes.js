@@ -1,12 +1,29 @@
 const fs = require("node:fs");
-const sti = "C:/Users/Søren Spark/Desktop/test";
+const path = require("node:path")
+const dirPath = "C:/Users/Søren Spark/Desktop/test/";
 
-fs.stat(sti, (err, stats)=> {
-    if(err){
-        console.log('mappen eksistere ikke')
-    } else {
-        console.log(stats)
-        console.log(stats.isDirectory)
-        console.log(stats.isFile)
+const getDirSize = (dir) => {
+    let size = 0;
+    const files = fs.readdirSync(dir);
+    for (const file of files) {
+        const filePath = path.join(dir, file);
+        const stats = fs.statSync(filePath);
+        if (stats.isFile()) {
+            size += stats.size;
+        } else if (stats.isDirectory()){
+            size += getDirSize(filePath);
+        }
     }
-});
+    return size;
+};
+
+const total = getDirSize(dirPath);
+console.log(total + ' bytes')
+
+/* fs.stat(sti, (err, stats)=> {
+    if(err){
+        console.log('mappen eksistere ikke');
+    } else {
+        console.log(stats.size + ' bytes');
+    }
+}); */
