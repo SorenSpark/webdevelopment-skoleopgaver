@@ -20,7 +20,7 @@ const getDirSize = (dir) => {
 const total = getDirSize(dirPath);
 console.log(total + ' bytes')
 
-/* fs.stat(sti, (err, stats)=> {
+/* fs.stat(dirPath, (err, stats)=> {
     if(err){
         console.log('mappen eksistere ikke');
     } else {

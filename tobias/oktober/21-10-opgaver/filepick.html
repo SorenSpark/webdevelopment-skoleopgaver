@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+  <meta charset="UTF-8">
+  <title>Filinformation</title>
+</head>
+<body>
+  <h1>Vælg en eller flere filer</h1>
+  <input type="file" id="filvalg" multiple>
+  <div id="info"></div>
+
+  <script>
+    const input = document.getElementById("filvalg");
+    const info = document.getElementById("info");
+
+    input.addEventListener("change", function() {
+      const filer = input.files;
+      info.innerHTML = ""; 
+
+      if (filer.length === 1) {
+
+        const fil = filer[0];
+        info.innerHTML = `
+          <h3>Filinformation:</h3>
+          <p><strong>Navn:</strong> ${fil.name}</p>
+          <p><strong>Størrelse:</strong> ${fil.size.toLocaleString()} bytes</p>
+          <p><strong>Type:</strong> ${fil.type || "Ukendt"}</p>
+        `;
+      } else {
+
+        let totalSize = 0;
+        for (const f of filer) {
+          totalSize += f.size;
+        }
+        info.innerHTML = `
+          <h3>Flere filer valgt:</h3>
+          <p>Antal filer: ${filer.length}</p>
+          <p>Samlet størrelse: ${totalSize.toLocaleString()} bytes</p>
+        `;
+      }
+    });
+  </script>
+</body>
+</html>

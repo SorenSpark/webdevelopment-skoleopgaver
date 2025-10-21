@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+  <meta charset="UTF-8">
+  <title>Session Storage Eksempel</title>
+</head>
+<body>
+  <h1 id="hilsen"></h1>
+  <button id="sletNavn">Slet navn</button>
+
+  <script>
+
+    let navn = sessionStorage.getItem("navn");
+
+    if (!navn) {
+      navn = prompt("Hej! Hvad hedder du?");
+      if (navn) {
+        sessionStorage.setItem("navn", navn);
+      }
+    }
+
+    const hilsenEl = document.getElementById("hilsen");
+    if (navn) {
+      hilsenEl.textContent = `Hej, ${navn}! Velkommen tilbage 👋`;
+    } else {
+      hilsenEl.textContent = "genindlæs siden for at indtaste dit navn.";
+    }
+
+    const sletKnap = document.getElementById("sletNavn");
+    sletKnap.addEventListener("click", function() {
+      sessionStorage.removeItem("navn");
+      hilsenEl.textContent = "Navnet er slettet.";
+    });
+  </script>
+</body>
+</html>
