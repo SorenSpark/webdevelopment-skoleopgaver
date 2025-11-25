@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cirkel Animation</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="webworker.js" defer></script>
+</head>
+<body>
+    <div class="info">
+        <strong>Farve Betydning:</strong>
+        <div class="legend">
+            <div class="legend-item">
+                <span class="color-box" style="background-color: rgba(255,0,0,0.5);"></span>
+                Rød (udfyldt) - Overlapper
+            </div>
+            <div class="legend-item">
+                <span class="color-box" style="background-color: red;"></span>
+                Rød - Berører hinanden
+            </div>
+            <div class="legend-item">
+                <span class="color-box" style="background-color: orange;"></span>
+                Orange - Meget tæt (&lt; 1 radius)
+            </div>
+            <div class="legend-item">
+                <span class="color-box" style="background-color: blue;"></span>
+                Blå - Tæt (1-2 radiusser)
+            </div>
+            <div class="legend-item">
+                <span class="color-box" style="background-color: green;"></span>
+                Grøn - Langt væk (&gt; 2 radiusser)
+            </div>
+        </div>
+    </div>
+
+    <div class="status">Web Worker Aktiv</div>
+
+    <canvas id="canvas"></canvas>
+
+    <script>
+        const canvas = document.getElementById('canvas');
+        
+        // Sæt canvas størrelse
+        canvas.width = 800;
+        canvas.height = 600;
+        
+        // Tjek om OffscreenCanvas er understøttet
+        if (!canvas.transferControlToOffscreen) {
+            alert('Din browser understøtter ikke OffscreenCanvas. Prøv en nyere browser.');
+        } else {
+            // Overfør canvas kontrol til offscreen
+            const offscreen = canvas.transferControlToOffscreen();
+            
+            // Opret worker
+            const worker = new Worker('webworker.js');
+            
+            // Send offscreen canvas til worker
+            worker.postMessage({
+                type: 'init',
+                canvas: offscreen,
+                width: canvas.width,
+                height: canvas.height
+            }, [offscreen]);
+            
+            // Lyt efter beskeder fra worker (valgfrit)
+            worker.addEventListener('message', (e) => {
+                if (e.data.type === 'ready') {
+                    console.log('Worker er klar og animationen kører!');
+                }
+            });
+            
+            // Håndter fejl
+            worker.addEventListener('error', (e) => {
+                console.error('Worker fejl:', e.message);
+            });
+        }
+    </script>
+</body>
+</html>
