@@ -1,115 +1,217 @@
 <!DOCTYPE html>
 <html lang="da">
 <head>
-<meta charset="UTF-8">
-<title>Canvas Cirkel Animation</title>
-<style>
-    body { background: #111; display: flex; justify-content: center; padding-top: 20px; }
-    canvas { background: white; border: 2px solid black; }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cirkel Animation</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #1a1a1a;
+            font-family: Arial, sans-serif;
+        }
+        canvas {
+            border: 2px solid #333;
+            background-color: #000;
+            box-shadow: 0 0 20px rgba(0,0,0,0.5);
+        }
+        .info {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            color: white;
+            background-color: rgba(0,0,0,0.7);
+            padding: 15px;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+        .legend {
+            margin-top: 10px;
+        }
+        .legend-item {
+            margin: 5px 0;
+        }
+        .color-box {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            margin-right: 8px;
+            vertical-align: middle;
+            border: 1px solid #666;
+        }
+    </style>
 </head>
 <body>
+    <div class="info">
+        <strong>Farve Betydning:</strong>
+        <div class="legend">
+            <div class="legend-item">
+                <span class="color-box" style="background-color: rgba(255,0,0,0.5);"></span>
+                Rød (udfyldt) - Overlapper
+            </div>
+            <div class="legend-item">
+                <span class="color-box" style="background-color: red;"></span>
+                Rød - Berører hinanden
+            </div>
+            <div class="legend-item">
+                <span class="color-box" style="background-color: orange;"></span>
+                Orange - Meget tæt (&lt; 1 radius)
+            </div>
+            <div class="legend-item">
+                <span class="color-box" style="background-color: blue;"></span>
+                Blå - Tæt (1-2 radiusser)
+            </div>
+            <div class="legend-item">
+                <span class="color-box" style="background-color: green;"></span>
+                Grøn - Langt væk (&gt; 2 radiusser)
+            </div>
+        </div>
+    </div>
 
-<canvas id="canvas" width="500" height="300"></canvas>
+    <canvas id="canvas"></canvas>
 
-<script>
-// Canvas setup
-const canvas = document.getElementById("canvas");
-const ctx = canvas.getContext("2d");
-
-// Circles
-let circle1 = {
-    x: 50,
-    y: 50,
-    r: 30,
-    dx: 1,
-    dy: 1
-};
-
-let circle2 = {
-    x: 300,
-    y: 200,
-    r: 30,
-    dx: -1,
-    dy: -0.5
-};
-
-// Function to update circle position + bounce
-function move(circle) {
-    circle.x += circle.dx;
-    circle.y += circle.dy;
-
-    // Bounce on horizontal walls
-    if (circle.x - circle.r < 0 || circle.x + circle.r > canvas.width) {
-        circle.dx *= -1;
-    }
-
-    // Bounce on vertical walls
-    if (circle.y - circle.r < 0 || circle.y + circle.r > canvas.height) {
-        circle.dy *= -1;
-    }
-}
-
-// Function to calculate distance
-function distance(c1, c2) {
-    return Math.hypot(c1.x - c2.x, c1.y - c2.y);
-}
-
-// Function to draw a circle
-function drawCircle(c, fillColor, strokeColor, filled = true) {
-    ctx.beginPath();
-    ctx.arc(c.x, c.y, c.r, 0, Math.PI * 2);
-
-    if (filled) {
-        ctx.fillStyle = fillColor;
-        ctx.fill();
-    }
-    ctx.strokeStyle = strokeColor;
-    ctx.stroke();
-}
-
-// Animation loop
-function animate() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-    // Move circles
-    move(circle1);
-    move(circle2);
-
-    // Calculate distance
-    const d = distance(circle1, circle2);
-    const sumR = circle1.r + circle2.r;
-
-    // Determine color relationship
-    let fillColor1 = "green";
-    let fillColor2 = "green";
-    let strokeColor = "black";
-
-    if (d < sumR - 10) {
-        // They overlap clearly
-        fillColor1 = fillColor2 = "red";
-        strokeColor = "red";
-    } else if (Math.abs(d - sumR) < 1) {
-        // Just touching
-        fillColor1 = fillColor2 = "white";
-        strokeColor = "red";
-    } else if (d < circle1.r) {
-        // Very close
-        fillColor1 = fillColor2 = "orange";
-    } else if (d < circle1.r * 2) {
-        // Close
-        fillColor1 = fillColor2 = "blue";
-    }
-
-    // Draw circles
-    drawCircle(circle1, fillColor1, strokeColor);
-    drawCircle(circle2, fillColor2, strokeColor);
-
-    requestAnimationFrame(animate);
-}
-
-animate();
-</script>
-
+    <script>
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+        
+        // Sæt canvas størrelse
+        canvas.width = 800;
+        canvas.height = 600;
+        
+        // Cirkel klasse
+        class Circle {
+            constructor(x, y, radius, vx, vy) {
+                this.x = x;
+                this.y = y;
+                this.radius = radius;
+                this.vx = vx; // hastighed i x-retning
+                this.vy = vy; // hastighed i y-retning
+                this.color = 'green';
+                this.filled = false;
+            }
+            
+            // Opdater position
+            update() {
+                // Bevæg cirklen
+                this.x += this.vx;
+                this.y += this.vy;
+                
+                // Bounce ved kanter
+                if (this.x + this.radius > canvas.width || this.x - this.radius < 0) {
+                    this.vx = -this.vx;
+                }
+                if (this.y + this.radius > canvas.height || this.y - this.radius < 0) {
+                    this.vy = -this.vy;
+                }
+                
+                // Hold cirklen indenfor canvas
+                this.x = Math.max(this.radius, Math.min(canvas.width - this.radius, this.x));
+                this.y = Math.max(this.radius, Math.min(canvas.height - this.radius, this.y));
+            }
+            
+            // Tegn cirklen
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                
+                if (this.filled) {
+                    ctx.fillStyle = this.color;
+                    ctx.fill();
+                } else {
+                    ctx.strokeStyle = this.color;
+                    ctx.lineWidth = 3;
+                    ctx.stroke();
+                }
+            }
+        }
+        
+        // Beregn afstand mellem to cirkler
+        function getDistance(circle1, circle2) {
+            const dx = circle2.x - circle1.x;
+            const dy = circle2.y - circle1.y;
+            return Math.sqrt(dx * dx + dy * dy);
+        }
+        
+        // Opdater farver baseret på afstand
+        function updateColors(circle1, circle2) {
+            const distance = getDistance(circle1, circle2);
+            const radiusSum = circle1.radius + circle2.radius;
+            const avgRadius = (circle1.radius + circle2.radius) / 2;
+            
+            let color;
+            let filled = false;
+            
+            if (distance < radiusSum) {
+                // Overlapper - rød med udfyldning
+                color = 'rgba(255, 0, 0, 0.5)';
+                filled = true;
+            } else if (distance <= radiusSum + 5) {
+                // Berører hinanden - rød
+                color = 'red';
+            } else if (distance < radiusSum + avgRadius) {
+                // Meget tæt - orange
+                color = 'orange';
+            } else if (distance < radiusSum + avgRadius * 2) {
+                // Tæt - blå
+                color = 'blue';
+            } else {
+                // Langt væk - grøn
+                color = 'green';
+            }
+            
+            circle1.color = color;
+            circle1.filled = filled;
+            circle2.color = color;
+            circle2.filled = filled;
+        }
+        
+        // Opret to cirkler med forskellige hastigheder
+        const circle1 = new Circle(200, 200, 40, 2, 1.5);
+        const circle2 = new Circle(600, 400, 50, -1.5, -2);
+        
+        // Animation loop
+        function animate() {
+            // Ryd canvas
+            ctx.fillStyle = '#000';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            // Opdater positioner
+            circle1.update();
+            circle2.update();
+            
+            // Opdater farver baseret på afstand
+            updateColors(circle1, circle2);
+            
+            // Tegn cirklerne
+            circle1.draw();
+            circle2.draw();
+            
+            // Tegn linje mellem cirklerne
+            ctx.beginPath();
+            ctx.moveTo(circle1.x, circle1.y);
+            ctx.lineTo(circle2.x, circle2.y);
+            ctx.strokeStyle = 'rgba(255, 255, 255, 0.2)';
+            ctx.lineWidth = 1;
+            ctx.stroke();
+            
+            // Vis afstand
+            const distance = getDistance(circle1, circle2);
+            ctx.fillStyle = 'white';
+            ctx.font = '12px Arial';
+            const midX = (circle1.x + circle2.x) / 2;
+            const midY = (circle1.y + circle2.y) / 2;
+            ctx.fillText(`${Math.round(distance)}px`, midX, midY);
+            
+            requestAnimationFrame(animate);
+        }
+        
+        // Start animationen
+        animate();
+    </script>
 </body>
 </html>
