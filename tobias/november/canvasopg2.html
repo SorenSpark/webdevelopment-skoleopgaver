@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <!-- Indlæs den uploadede fil og tegn det figur som koordinaterne angiver, ved at forbinde hvert punkt med det foregående. Punkterne er angivet som GPS-koordinater (med højden nulstillet), så de skal først normaliseres til at kunne være i en canvas
+ -->
+    <canvas id="canvas" width="500" height="500"> </canvas>
+    <input type="file" name="" id="file" />
+    <script type="module">
+      const fileInput = document.getElementById("file");
+      fileInput.addEventListener("change", readFile);
+ 
+      function readFile(event) {
+        const file = event.target.files[0];
+        const reader = new FileReader();
+ 
+        reader.onload = () => {
+          const text = reader.result;
+ 
+          const rawPoints = text.trim().split(" ");
+ 
+          const points = rawPoints.map((p) => {
+            const [x, y, z] = p.split(",").map(Number);
+            return { x, y };
+          });
+ 
+          const xs = points.map((p) => p.x);
+          const ys = points.map((p) => p.y);
+ 
+          const minX = Math.min(...xs);
+          const maxX = Math.max(...xs);
+          const minY = Math.min(...ys);
+          const maxY = Math.max(...ys);
+ 
+          const canvas = document.getElementById("canvas");
+          const ctx = canvas.getContext("2d");
+ 
+          const width = canvas.width;
+          const height = canvas.height;
+ 
+          function normalizeX(x) {
+            return ((x - minX) / (maxX - minX)) * width;
+          }
+ 
+          function normalizeY(y) {
+            return height - ((y - minY) / (maxY - minY)) * height;
+          }
+ 
+          ctx.beginPath();
+          ctx.moveTo(normalizeX(points[0].x), normalizeY(points[0].y));
+ 
+          for (let i = 1; i < points.length; i++) {
+            const p = points[i];
+            ctx.lineTo(normalizeX(p.x), normalizeY(p.y));
+          }
+ 
+          ctx.stroke();
+        };
+ 
+        reader.readAsText(file); 
+      }
+    </script>
+  </body>
+</html>
